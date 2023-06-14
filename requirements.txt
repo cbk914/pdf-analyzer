@@ -1,4 +1,4 @@
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 gpt4all==0.3.4
 transformers==4.9.2
 argparse==1.4.0
