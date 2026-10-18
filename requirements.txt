@@ -1,4 +1,22 @@
+# pdf-analyzer runtime dependencies.
+#
+# Third-party imports: PyPDF2 (pdf-analyzer.py:6), gpt4all (7),
+# transformers (8).
+#
+# Removed: argparse==1.4.0. argparse is a CPython standard-library module;
+# the PyPI package "argparse" 1.4.0 is a 2015 snapshot that installs an
+# `argparse.py` into site-packages that SHADOWS the stdlib module, which is a
+# correctness hazard rather than a cosmetic one.
+#
+# Bumped: transformers 4.9.2 (Jan 2021) -> 4.46.3. The code only uses
+# GPT2Tokenizer.from_pretrained(), .encode() and
+# .decode(clean_up_tokenization_spaces=) (pdf-analyzer.py:55,61,69), all of
+# which are unchanged in 4.x. The old pin forced tokenizers 0.10.x and
+# huggingface-hub 0.0.12, which have no cp311 wheels.
+#
+# Kept at 1.26.0 deliberately: pdf-analyzer.py:29 calls the removed-in-3.x
+# extractText() and line 34 uses PyPDF2.utils.PdfReadError. Bumping to PyPDF2
+# 3.x would require rewriting those call sites; that is out of scope here.
 PyPDF2==1.26.0
 gpt4all==0.3.4
-transformers==4.9.2
-argparse==1.4.0
+transformers==4.46.3
